@@ -11,4 +11,11 @@ export default [
   ...tseslint.configs.recommended,
   ...pluginVue.configs["flat/essential"],
   { files: ["**/*.vue"], languageOptions: { parserOptions: { parser: tseslint.parser } } },
+  {
+    // 添加一个新的配置对象来设置规则
+    rules: {
+      // 禁止使用分号
+      semi: ["error", "never"],
+    },
+  },
 ]
