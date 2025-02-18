@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance.ts'
+import axiosInstance from './axios-instance'
 import type { AxiosResponse } from 'axios'
 
 /**
