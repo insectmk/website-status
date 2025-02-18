@@ -1,13 +1,32 @@
 <script setup lang="ts">
-import { useCounterStore } from '../store'
+import type { Monitor } from '../types/uptime-robot-type'
+import { downTimes, avgUptime } from './WebSiteCard.util'
+import { getStatusRangeInfos } from '../utils/uptime-robot-param-util.ts'
 
-const store = useCounterStore()
+// 使用 defineProps 定义 prop
+const props = defineProps<{
+  monitor: Monitor // UptimeRobot返回的网站状态信息
+}>()
+
+const statusRangeInfos = getStatusRangeInfos(props.monitor.custom_uptime_ranges, props.monitor.logs)
+// 状态条盒子
+// 详细信息
 </script>
 
 <template>
-  <h1>{{ store.count }}</h1>
-  <h1>{{ store.double }}</h1>
-  <el-button @click="store.increment" type="primary">按钮点击调用increment方法</el-button>
+  <el-card>
+    <h3>{{ props.monitor?.friendly_name }}</h3>
+    <div>
+      平均运行状态
+      <span>{{ avgUptime(statusRangeInfos) }}</span>
+    </div>
+    <div>
+      故障次数
+      <span>{{ downTimes(statusRangeInfos) }}</span>
+    </div>
+    <div>状态条盒子</div>
+    <div>详细信息</div>
+  </el-card>
 </template>
 
 <style scoped></style>
