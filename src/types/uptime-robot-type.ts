@@ -41,3 +41,22 @@ interface Reason {
   code: string
   detail: string
 }
+/**
+ * 返回状态
+ */
+export interface Status {
+  code: number
+  status: string
+  statusText: string
+}
+/**
+ * 网站日期范围详细信息
+ */
+export interface StatusRangeInfo {
+  status: Status // 状态
+  startDate: number
+  endDate: number
+  uptime: number // 可用率
+  downTimes: number // 故障次数
+  downDuration: number // 故障持续时间 s
+}

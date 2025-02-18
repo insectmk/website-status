@@ -1,6 +1,6 @@
 import { postAction } from './http'
 import type { UptimeRobotApiParams, UptimeRobotApiResponse } from '../types/uptime-robot-type'
-import { getCustomUptimeReqParam } from '../config/uptime-robot-param-generator'
+import { getCustomUptimeReqParam } from '../utils/uptime-robot-param-util'
 import system from '../config/system-config'
 
 /**
