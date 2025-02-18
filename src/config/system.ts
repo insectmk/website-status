@@ -1,6 +1,6 @@
 export default {
   // 显示标题
-  SiteName: 'InsectMk的在线状态',
+  siteName: 'InsectMk的在线状态',
   /*
    * API接口地址：
    * UptimeRobot官方默认（限制1分钟10次请求）：https://api.uptimerobot.com/v2/getMonitors
