@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import WebsiteCard from '../components/WebsiteCard.vue'
+import WebsiteCard from '../components/website-status/WebsiteCard.vue'
 import { getMonitors } from '../api/uptime-robot.ts'
 import system from '../config/system-config'
 import { ref } from 'vue'
