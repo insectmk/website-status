@@ -9,13 +9,14 @@ const props = defineProps<{
 }>()
 
 const statusRangeInfos = getStatusRangeInfos(props.monitor.custom_uptime_ranges, props.monitor.logs)
+console.log(statusRangeInfos, '内容')
 // 状态条盒子
 // 详细信息
 </script>
 
 <template>
   <el-card>
-    <h3>{{ props.monitor?.friendly_name }}</h3>
+    <h3>{{ props.monitor.friendly_name }}</h3>
     <div>
       平均运行状态
       <span>{{ avgUptime(statusRangeInfos) }}</span>
@@ -25,7 +26,7 @@ const statusRangeInfos = getStatusRangeInfos(props.monitor.custom_uptime_ranges,
       <span>{{ downTimes(statusRangeInfos) }}</span>
     </div>
     <div>状态条盒子</div>
-    <div>详细信息</div>
+    <div>网站日志</div>
   </el-card>
 </template>
 

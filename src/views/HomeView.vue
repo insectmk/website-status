@@ -19,7 +19,22 @@ system.apiKeys.forEach((apiKey) => {
 </script>
 
 <template>
-  <website-card v-for="monitor in monitorList" :key="monitor.id" :monitor="monitor" />
+  <el-container>
+    <el-row :gutter="10">
+      <el-col
+        :xs="24"
+        :sm="12"
+        :md="12"
+        :lg="12"
+        :xl="12"
+        :style="{ marginTop: '5px', marginBottom: '5px' }"
+        v-for="monitor in monitorList"
+        :key="monitor.id"
+      >
+        <website-card :monitor="monitor" />
+      </el-col>
+    </el-row>
+  </el-container>
 </template>
 
 <style scoped></style>
