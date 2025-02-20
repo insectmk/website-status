@@ -1,0 +1,7 @@
+/* 当屏幕宽度小于 768px  */
+@media (max-width: 560px) {
+    /*移动端隐藏*/
+    .mobile-hide {
+        display: none !important;
+    }
+}

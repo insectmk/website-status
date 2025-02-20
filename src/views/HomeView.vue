@@ -28,7 +28,7 @@ fetchAllMonitors()
     <el-row :gutter="10">
       <el-col
         :xs="24"
-        :sm="12"
+        :sm="24"
         :md="12"
         :lg="12"
         :xl="12"

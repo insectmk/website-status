@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { Monitor } from '../../types/uptime-robot-type.ts'
-import { downTimes, avgUptime, getWebInfo } from './WebSiteCard.util.ts'
+import { getWebInfo } from './WebSiteCard.util.ts'
 import { ref } from 'vue'
 import StatusBar from './StatusBar.vue'
+import systemConfig from '../../config/system-config.ts'
 
 // 使用 defineProps 定义 prop
 const props = defineProps<{
@@ -12,16 +13,19 @@ const activeNames = ref([])
 
 const webInfo = getWebInfo(props.monitor) //网站信息
 console.log(webInfo, '内容')
-// 状态条盒子
-// 详细信息
 </script>
 
 <template>
-  <el-card>
+  <el-card class="website-card">
     <!-- 网站名称及状态 -->
     <el-container>
-      <span class="name">{{ webInfo.friendly_name }}</span>
-      <el-link :href="webInfo.url" target="_blank">
+      <span class="website-name mobile-hide">{{ webInfo.friendly_name }}</span>
+      <el-link
+        :title="webInfo.friendly_name"
+        v-show="systemConfig.showLink"
+        :href="webInfo.url"
+        target="_blank"
+      >
         <el-icon :size="20"> <icon-ep-link /> </el-icon>
       </el-link>
       <span :class="['right-align', 'status', webInfo.statusInfo.status]">{{
@@ -29,22 +33,24 @@ console.log(webInfo, '内容')
       }}</span>
     </el-container>
     <!-- 网站统计信息 -->
-    <el-row>
+    <el-row :gutter="10">
       <el-col :span="12">
-        <el-card>
-          平均运行状态
-          <span>{{ avgUptime(webInfo.statusRangeInfos) }}</span>
+        <el-card class="website-analyse-card">
+          <span class="mobile-hide">平均可用率：</span>
+          <span class="website-analyse-data">{{ webInfo.analyse.avgUptime }}%</span>
         </el-card>
       </el-col>
       <el-col :span="12">
-        <el-card>
-          故障次数
-          <span>{{ downTimes(webInfo.statusRangeInfos) }}</span>
+        <el-card class="website-analyse-card">
+          <span class="mobile-hide">故障次数：</span>
+          <span class="website-analyse-data">{{ webInfo.analyse.downTimes }}次</span>
         </el-card>
       </el-col>
       <!-- 网站每日状态条 -->
       <el-col :span="24">
-        <status-bar :webInfo="webInfo" />
+        <el-card class="website-analyse-card">
+          <status-bar :webInfo="webInfo" />
+        </el-card>
       </el-col>
     </el-row>
     <!-- 网站日志信息 -->
@@ -64,6 +70,7 @@ console.log(webInfo, '内容')
 /*网站名称*/
 .website-name {
   font-size: 16px;
+  font-weight: 400;
 }
 /*网站状态*/
 .status {
@@ -87,5 +94,20 @@ console.log(webInfo, '内容')
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M521.216 164.864c161.792 0 199.68 149.504 106.496 242.688C523.264 512 441.344 532.48 441.344 749.568h158.72c1.024-123.904 62.464-182.272 125.952-239.616 58.368-53.248 120.832-99.328 120.832-206.848 0-171.008-159.744-292.864-325.632-292.864-187.392 0-344.064 132.096-344.064 316.416h158.72c0-92.16 92.16-161.792 185.344-161.792M441.344 855.04h158.72v158.72h-158.72V855.04z' fill='%23969ea8'/%3E%3C/svg%3E");
     color: #969ea8;
   }
+}
+/*卡片圆角*/
+.website-analyse-card,
+.website-card {
+  border-radius: 12px;
+}
+/*分析数据卡片*/
+.website-analyse-card {
+  margin-top: 14px;
+  font-size: 14px;
+}
+/*分析数据*/
+.website-analyse-data {
+  font-size: 14px;
+  font-weight: 600;
 }
 </style>

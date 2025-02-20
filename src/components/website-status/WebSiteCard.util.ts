@@ -65,23 +65,6 @@ export const getWebInfo = (monitor: Monitor): WebInfo => {
     statusInfo: getStatus(monitor.status), // 网站当前状态信息,
     startTime: statusRangeInfos[0].startDate, // 监控开始天时间戳
     endTime: statusRangeInfos.slice(-1)[0].startDate, // 监控结束天时间戳
-    analyse // 网站分析
+    analyse, // 网站分析
   }
-}
-
-/**
- * 故障次数
- */
-export const downTimes = (statusRangeInfos: StatusRangeInfo[]): number => {
-  return statusRangeInfos.reduce((downTime, info) => downTime + info.downTimes, 0)
-}
-/**
- * 平均运行状态
- */
-export const avgUptime = (statusRangeInfos: StatusRangeInfo[]): number => {
-  return parseFloat(
-    (statusRangeInfos.reduce((acc, info) => acc + info.uptime, 0) / statusRangeInfos.length)
-      .toFixed(3)
-      .slice(0, -1)
-  )
 }

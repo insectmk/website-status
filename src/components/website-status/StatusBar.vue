@@ -22,12 +22,12 @@ const props = defineProps<{
         :class="{
           'status-bar-item': true,
           ok: statusRangeInfo.status.status === 'ok',
-          down: statusRangeInfo.status.status === 'down'
+          down: statusRangeInfo.status.status === 'down',
         }"
       />
     </el-tooltip>
   </div>
-  <div class="summary">
+  <div class="summary mobile-hide">
     <span>
       {{ getDateOrToday(webInfo.startTime) }}
     </span>
