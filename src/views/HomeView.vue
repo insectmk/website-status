@@ -8,14 +8,19 @@ import type { Monitor } from '../types/uptime-robot-type.ts'
 const monitorList = ref<Monitor[]>([]) // 所有的网站监控信息
 
 // 获取所有网站数据
-system.apiKeys.forEach((apiKey) => {
-  getMonitors({
-    api_key: apiKey
-  }).then((resp) => {
-    // 将所有apikey获取到的网站信息合并到一个list
-    monitorList.value = monitorList.value.concat(resp.monitors)
-  })
-})
+const fetchAllMonitors = async () => {
+  const promises = system.apiKeys.map(apiKey =>
+    getMonitors({ api_key: apiKey }).then(resp => resp.monitors)
+  )
+
+  // 等待所有请求完成
+  const results = await Promise.all(promises)
+
+  // 按顺序合并结果
+  monitorList.value = results.flat()
+}
+
+fetchAllMonitors()
 </script>
 
 <template>
