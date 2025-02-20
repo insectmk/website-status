@@ -5,6 +5,7 @@ import system from '../config/system-config'
 import { ref } from 'vue'
 import type { Monitor } from '../types/uptime-robot-type.ts'
 import TotalAnalyse from '../components/total-analyse/TotalAnalyse.vue'
+import ProjectCopyright from '../components/footer/ProjectCopyright.vue'
 
 const monitorList = ref<Monitor[]>([]) // 所有的网站监控信息
 const isLoading = ref(true) // 数据是否在加载
@@ -51,6 +52,10 @@ fetchAllMonitors()
             :key="monitor.id"
           >
             <website-card :monitor="monitor" />
+          </el-col>
+          <!-- 页脚内容 -->
+          <el-col :span="24">
+            <project-copyright />
           </el-col>
         </el-row>
       </el-container>
