@@ -31,6 +31,10 @@ export const getTotalAnalyse = (monitors: Monitor[]): TotalAnalyse => {
       .toFixed(3)
       .slice(0, -1)
   )
+  // 监控网站数量
+  totalAnalyse.websiteCount = webInfos.length
+  // 故障网站数量
+  totalAnalyse.downTimes = webInfos.filter(webInfo => webInfo.statusInfo.status === 'down').length
   return totalAnalyse
 }
 
@@ -39,16 +43,43 @@ export const getTotalAnalyse = (monitors: Monitor[]): TotalAnalyse => {
  */
 export class TotalAnalyse {
   private _days: number // 统计天数
+  private _websiteCount: number // 监控网站数量
+  private _downWebsiteCount: number // 故障网站数
   private _downTimes: number // 故障次数
   private _downDuration: number // 故障持续时间
   private _avgUptime: number // 平均可用率
 
   constructor()
-  constructor(days?: number, downTimes?: number, downDuration?: number, avgUptime?: number) {
+  constructor(
+    days?: number,
+    websiteCount?: number,
+    downWebsiteCount?: number,
+    downTimes?: number,
+    downDuration?: number,
+    avgUptime?: number
+  ) {
     this._days = days ?? 0
+    this._websiteCount = websiteCount ?? 0
+    this._downWebsiteCount = downWebsiteCount ?? 0
     this._downTimes = downTimes ?? 0
     this._downDuration = downDuration ?? 0
     this._avgUptime = avgUptime ?? 0
+  }
+
+  get downWebsiteCount(): number {
+    return this._downWebsiteCount
+  }
+
+  set downWebsiteCount(value: number) {
+    this._downWebsiteCount = value
+  }
+
+  get websiteCount(): number {
+    return this._websiteCount
+  }
+
+  set websiteCount(value: number) {
+    this._websiteCount = value
   }
 
   get days(): number {

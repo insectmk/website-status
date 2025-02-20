@@ -46,7 +46,7 @@ interface Reason {
  */
 export interface Status {
   code: number
-  status: string
+  status: 'ok' | 'down' | 'unknown'
   statusText: string
 }
 /**
