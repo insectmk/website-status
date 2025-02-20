@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Monitor } from '../../types/uptime-robot-type.ts'
-import { getTotalAnalyse } from './TotalAnalyse.util.vue.ts'
+import { getTotalAnalyse } from './TotalAnalyse.util.ts'
 
 // 使用 defineProps 定义 prop
 const props = defineProps<{

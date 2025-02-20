@@ -7,7 +7,7 @@ import type { Monitor } from '../types/uptime-robot-type.ts'
 import TotalAnalyse from '../components/total-analyse/TotalAnalyse.vue'
 
 const monitorList = ref<Monitor[]>([]) // 所有的网站监控信息
-const isDataLoaded = ref(false) // 数据是否加载完成
+const isLoading = ref(true) // 数据是否在加载
 
 // 获取所有网站数据
 const fetchAllMonitors = async () => {
@@ -22,34 +22,101 @@ const fetchAllMonitors = async () => {
   monitorList.value = results.flat()
 
   // 数据是加载完成
-  isDataLoaded.value = true
+  isLoading.value = false
 }
 
 fetchAllMonitors()
 </script>
 
 <template>
-  <el-container v-if="isDataLoaded">
-    <el-row :gutter="10">
-      <!-- 监控分析卡片 -->
-      <el-col :span="24">
-        <total-analyse :monitors="monitorList" />
-      </el-col>
-      <!-- 网站状态卡片 -->
-      <el-col
-        :xs="24"
-        :sm="24"
-        :md="12"
-        :lg="12"
-        :xl="12"
-        :style="{ marginTop: '5px', marginBottom: '5px' }"
-        v-for="monitor in monitorList"
-        :key="monitor.id"
-      >
-        <website-card :monitor="monitor" />
-      </el-col>
-    </el-row>
-  </el-container>
+  <!-- 骨架框 -->
+  <el-skeleton :loading="isLoading" style="width: 100%" animated>
+    <!-- 真正的内容 -->
+    <template #default>
+      <el-container>
+        <el-row :gutter="10">
+          <!-- 监控分析卡片 -->
+          <el-col :span="24">
+            <total-analyse :monitors="monitorList" />
+          </el-col>
+          <!-- 网站状态卡片 -->
+          <el-col
+            :xs="24"
+            :sm="24"
+            :md="12"
+            :lg="12"
+            :xl="12"
+            :style="{ marginTop: '5px', marginBottom: '5px' }"
+            v-for="monitor in monitorList"
+            :key="monitor.id"
+          >
+            <website-card :monitor="monitor" />
+          </el-col>
+        </el-row>
+      </el-container>
+    </template>
+    <!-- 骨架内容 -->
+    <template #template>
+      <el-row :gutter="10">
+        <!-- 监控分析卡片 -->
+        <el-col :span="24">
+          <el-row>
+            <el-col :span="8">
+              <el-card>
+                <el-skeleton :rows="1" />
+              </el-card>
+            </el-col>
+            <el-col :span="8">
+              <el-card>
+                <el-skeleton :rows="1" />
+              </el-card>
+            </el-col>
+            <el-col :span="8">
+              <el-card>
+                <el-skeleton :rows="1" />
+              </el-card>
+            </el-col>
+          </el-row>
+        </el-col>
+        <!-- 网站状态卡片 -->
+        <el-col
+          :xs="24"
+          :sm="24"
+          :md="12"
+          :lg="12"
+          :xl="12"
+          :style="{ marginTop: '5px', marginBottom: '5px' }"
+          v-for="item in Array(6)"
+          :key="item"
+        >
+          <el-card>
+            <el-row>
+              <el-col :span="12">
+                <el-card>
+                  <el-skeleton-item />
+                </el-card>
+              </el-col>
+              <el-col :span="12">
+                <el-card>
+                  <el-skeleton-item />
+                </el-card>
+              </el-col>
+              <el-col :span="24">
+                <el-card>
+                  <el-skeleton :rows="1" />
+                </el-card>
+              </el-col>
+              <el-col :span="24">
+                <el-card>
+                  <el-skeleton-item />
+                </el-card>
+              </el-col>
+            </el-row>
+          </el-card>
+        </el-col>
+      </el-row>
+    </template>
+  </el-skeleton>
 </template>
 
 <style scoped></style>
