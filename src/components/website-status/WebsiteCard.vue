@@ -28,7 +28,7 @@ console.log(webInfo, '内容')
       >
         <el-icon :size="20"> <icon-ep-link /> </el-icon>
       </el-link>
-      <span :class="['right-align', 'status', webInfo.statusInfo.status]">{{
+      <span :class="['status', webInfo.statusInfo.status]">{{
         webInfo.statusInfo.statusText
       }}</span>
     </el-container>
