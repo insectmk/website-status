@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Monitor } from '../../types/uptime-robot-type.ts'
-import { getWebInfo } from './WebSiteCard.util.ts'
+import { getWebInfo } from './WebsiteCard.util.ts'
 import { ref } from 'vue'
 import StatusBar from './StatusBar.vue'
 import systemConfig from '../../config/system-config.ts'

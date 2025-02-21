@@ -1,6 +1,6 @@
 import type { Monitor } from '../../types/uptime-robot-type.ts'
-import type { WebInfo } from '../website-status/WebSiteCard.util.ts'
-import { getWebInfo } from '../website-status/WebSiteCard.util.ts'
+import type { WebInfo } from '../website-status/WebsiteCard.util.ts'
+import { getWebInfo } from '../website-status/WebsiteCard.util.ts'
 import systemConfig from '../../config/system-config.ts'
 import { formatDuration } from '../../utils/date-util.ts'
 

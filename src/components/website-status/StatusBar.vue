@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getDateOrToday } from './StatusBar.util.ts'
-import type { WebInfo } from './WebSiteCard.util.ts'
+import type { WebInfo } from './WebsiteCard.util.ts'
 
 // 使用 defineProps 定义 prop
 const props = defineProps<{
