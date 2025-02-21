@@ -23,6 +23,8 @@ export interface Monitor {
   // 网站监控内容
   id: number
   friendly_name: string
+  create_datetime: number //创建时间
+  interval: number //监控间隔时间
   url: string
   status: number
   custom_uptime_ranges: string
