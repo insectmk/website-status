@@ -65,18 +65,23 @@ fetchAllMonitors()
       <el-row :gutter="10">
         <!-- 监控分析卡片 -->
         <el-col :span="24">
-          <el-row>
-            <el-col :span="8">
+          <el-row :gutter="10">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
               <el-card>
                 <el-skeleton :rows="1" />
               </el-card>
             </el-col>
-            <el-col :span="8">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
               <el-card>
                 <el-skeleton :rows="1" />
               </el-card>
             </el-col>
-            <el-col :span="8">
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
+              <el-card>
+                <el-skeleton :rows="1" />
+              </el-card>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
               <el-card>
                 <el-skeleton :rows="1" />
               </el-card>
