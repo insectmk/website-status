@@ -2,7 +2,7 @@
 // 使用 defineProps 定义 prop
 const props = defineProps<{
   title: string // 标题
-  footer: string // 底部描述
+  footer?: string // 底部描述
   color: string // 颜色
 }>()
 </script>
@@ -36,7 +36,7 @@ const props = defineProps<{
       <!-- 主要内容 -->
       <slot name="content"></slot>
     </el-col>
-    <el-col :span="24" class="total-analyse-card-footer">
+    <el-col v-if="props.footer" :span="24" class="total-analyse-card-footer">
       <!-- 底部内容，暂时只支持文字 -->
       <el-tooltip :content="props.footer" effect="dark" :hide-after="0" placement="top">
         <span>{{ props.footer }}</span>
@@ -49,8 +49,6 @@ const props = defineProps<{
 /*统计分析卡片*/
 .total-analyse-card {
   border-radius: 12px;
-  margin-bottom: 8px;
-  font-size: 14px;
 }
 /*统计分析卡片的标题*/
 .total-analyse-card-title {

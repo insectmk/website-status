@@ -28,6 +28,7 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
   <el-row :gutter="10">
     <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
       <total-analyse-card
+        class="total-analyse-card"
         title="在线网站"
         color="#67c23a"
         :footer="getUptimeWebsiteMsg(totalAnalyse)"
@@ -45,6 +46,7 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
     </el-col>
     <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
       <total-analyse-card
+        class="total-analyse-card"
         title="离线网站"
         color="#f56c6c"
         :footer="getUptimeWebsiteMsg(totalAnalyse)"
@@ -59,6 +61,7 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
     </el-col>
     <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
       <total-analyse-card
+        class="total-analyse-card"
         title="平均可用率"
         color="#409EFF"
         :footer="getAvgUptimeMsg(totalAnalyse)"
@@ -77,7 +80,12 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
       </total-analyse-card>
     </el-col>
     <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
-      <total-analyse-card title="故障次数" color="#E6A23C" :footer="getDownTimesMsg(totalAnalyse)">
+      <total-analyse-card
+        class="total-analyse-card"
+        title="故障次数"
+        color="#E6A23C"
+        :footer="getDownTimesMsg(totalAnalyse)"
+      >
         <template #icon>
           <icon-ep-warning />
         </template>
@@ -88,6 +96,7 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
     </el-col>
     <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
       <total-analyse-card
+        class="total-analyse-card"
         title="最强网站"
         color="#9254DE"
         :footer="getMostStableWebsiteMsg(mostStableWebInfo)"
@@ -113,6 +122,7 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
     </el-col>
     <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
       <total-analyse-card
+        class="total-analyse-card"
         title="最弱网站"
         color="#F78989"
         :footer="getMostUnstableWebsiteMsg(mostUnstableWebInfo)"

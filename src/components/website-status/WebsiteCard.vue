@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import type { Monitor } from '../../types/uptime-robot-type.ts'
 import { getWebInfo } from './WebsiteCard.util.ts'
-import { ref } from 'vue'
 import StatusBar from './StatusBar.vue'
 import systemConfig from '../../config/system-config.ts'
+import WebsiteLogs from './WebsiteLogs.vue'
+import TotalAnalyseCard from '../total-analyse/TotalAnalyseCard.vue'
+import { getAvgUptimeColor } from '../total-analyse/TotalAnalyse.util.ts'
 
 // 使用 defineProps 定义 prop
 const props = defineProps<{
   monitor: Monitor // UptimeRobot返回的网站状态信息
 }>()
-const activeNames = ref([])
 
 const webInfo = getWebInfo(props.monitor) //网站信息
 console.log(webInfo, '内容')
@@ -52,21 +53,58 @@ console.log(webInfo, '内容')
           <status-bar :webInfo="webInfo" />
         </el-card>
       </el-col>
+      <el-col :span="8">
+        <!-- 网站日志信息 -->
+        <total-analyse-card class="website-analyse-card" title="网站日志" color="#8E44AD">
+          <template #icon>
+            <icon-ep-document />
+          </template>
+          <template #content>
+            <website-logs class="website-analyse-card" :logs="webInfo.logs" />
+          </template>
+        </total-analyse-card>
+      </el-col>
+      <el-col :span="8">
+        <!-- 可用率 -->
+        <total-analyse-card class="website-analyse-card" title="可用率" color="#67c23a">
+          <template #icon>
+            <icon-ep-trend-charts />
+          </template>
+          <template #content>
+            <el-progress
+              type="circle"
+              :color="getAvgUptimeColor(webInfo.analyse.avgUptime)"
+              :percentage="webInfo.analyse.avgUptime"
+              :width="90"
+            />
+          </template>
+        </total-analyse-card>
+      </el-col>
+      <el-col :span="8">
+        <!-- 故障次数 -->
+        <total-analyse-card class="website-analyse-card" title="故障次数" color="#E6A23C">
+          <template #icon>
+            <icon-ep-warning />
+          </template>
+          <template #content>
+            <el-statistic
+              :value-style="{ fontSize: '32px', fontWeight: 'bold' }"
+              :value="webInfo.analyse.downTimes"
+              style="cursor: pointer"
+            />
+          </template>
+        </total-analyse-card>
+      </el-col>
     </el-row>
-    <!-- 网站日志信息 -->
-    <el-collapse v-model="activeNames">
-      <el-collapse-item title="网站日志" name="1">
-        <el-card v-for="log in props.monitor.logs" :key="log.id">
-          <div>
-            {{ `类型：${log.type}持续时间：${log.duration}原因：${log.reason.detail}` }}
-          </div>
-        </el-card>
-      </el-collapse-item>
-    </el-collapse>
   </el-card>
 </template>
 
 <style scoped>
+/*统计分析卡片*/
+.total-analyse-card {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
 /*网站名称*/
 .website-name {
   font-size: 16px;
