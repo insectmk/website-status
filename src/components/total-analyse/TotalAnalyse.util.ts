@@ -4,6 +4,23 @@ import { getWebInfo } from '../website-status/WebSiteCard.util.ts'
 import systemConfig from '../../config/system-config.ts'
 
 /**
+ * 获取可用率该使用的原色
+ * @param uptime 可用率
+ */
+export const getAvgUptimeColor = (uptime: number): string => {
+  if (uptime < 70) {
+    // 小于70
+    return '#f56c6c'
+  } else if (uptime < 90) {
+    // 70~90
+    return '#e6a23c'
+  } else {
+    // 大于90
+    return '#5cb87a'
+  }
+}
+
+/**
  * 获取所有网站的统计信息
  * @param monitors 所有的UptimeRobot网站监控数据
  */
@@ -35,6 +52,8 @@ export const getTotalAnalyse = (monitors: Monitor[]): TotalAnalyse => {
   totalAnalyse.websiteCount = webInfos.length
   // 故障网站数量
   totalAnalyse.downTimes = webInfos.filter(webInfo => webInfo.statusInfo.status === 'down').length
+  // 所有网站信息
+  totalAnalyse.webInfos = webInfos
   return totalAnalyse
 }
 
@@ -42,6 +61,7 @@ export const getTotalAnalyse = (monitors: Monitor[]): TotalAnalyse => {
  * 全局分析类：分析所有网站的监控信息
  */
 export class TotalAnalyse {
+  private _webInfos: WebInfo[] // 网站信息
   private _days: number // 统计天数
   private _websiteCount: number // 监控网站数量
   private _downWebsiteCount: number // 故障网站数
@@ -51,6 +71,7 @@ export class TotalAnalyse {
 
   constructor()
   constructor(
+    webInfos?: WebInfo[],
     days?: number,
     websiteCount?: number,
     downWebsiteCount?: number,
@@ -58,12 +79,41 @@ export class TotalAnalyse {
     downDuration?: number,
     avgUptime?: number
   ) {
+    this._webInfos = webInfos ?? []
     this._days = days ?? 0
     this._websiteCount = websiteCount ?? 0
     this._downWebsiteCount = downWebsiteCount ?? 0
     this._downTimes = downTimes ?? 0
     this._downDuration = downDuration ?? 0
     this._avgUptime = avgUptime ?? 0
+  }
+
+  /**
+   * 获取最不稳定的网站信息
+   */
+  public getMostUnstableWebsite(): WebInfo {
+    return this._webInfos.reduce((unstableWebsite, webSite) => {
+      return unstableWebsite.analyse.avgUptime < webSite.analyse.avgUptime
+        ? unstableWebsite
+        : webSite
+    })
+  }
+
+  /**
+   * 获取最稳定的网站信息
+   */
+  public getMostStableWebsite(): WebInfo {
+    return this._webInfos.reduce((stableWebsite, webSite) => {
+      return stableWebsite.analyse.avgUptime > webSite.analyse.avgUptime ? stableWebsite : webSite
+    })
+  }
+
+  get webInfos(): WebInfo[] {
+    return this._webInfos
+  }
+
+  set webInfos(value: WebInfo[]) {
+    this._webInfos = value
   }
 
   get downWebsiteCount(): number {

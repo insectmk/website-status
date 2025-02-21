@@ -70,7 +70,7 @@ console.log(webInfo, '内容')
 /*网站名称*/
 .website-name {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 600;
 }
 /*网站状态*/
 .status {
