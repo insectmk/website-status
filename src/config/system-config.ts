@@ -4,7 +4,7 @@ export default {
   /*
    * API接口地址：
    * UptimeRobot官方默认（限制1分钟10次请求）：https://api.uptimerobot.com/v2/getMonitors
-   * 本项目（1分钟缓存）https://status-api.insectmk.top/
+   * 本项目（5分钟缓存）https://status-api.insectmk.top/
    * */
   apiUrl: 'https://status-api.insectmk.top/',
   // UptimeRobot Api Keys
@@ -18,7 +18,7 @@ export default {
     'm796898840-8fc99da36433dffa2151b5be', // InsectMk的在线状态 API key
   ],
   // 日志天数
-  countDays: 30,
+  countDays: 90,
   // 是否显示检测站点的链接
   showLink: true,
   // 是否正序显示状态，旧数据->新数据

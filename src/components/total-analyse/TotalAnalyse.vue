@@ -10,6 +10,7 @@ import {
   getUptimeWebsiteMsg,
 } from './TotalAnalyse.util.ts'
 import TotalAnalyseCard from './TotalAnalyseCard.vue'
+import systemConfig from '../../config/system-config.ts'
 
 // 使用 defineProps 定义 prop
 const props = defineProps<{
@@ -96,13 +97,17 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
         </template>
         <template #content>
           <el-link
-            class="link-content"
+            v-if="systemConfig.showLink"
+            class="content-website-name"
             :underline="false"
             :href="mostStableWebInfo.url"
             target="_blank"
           >
             {{ mostStableWebInfo.friendly_name }}
           </el-link>
+          <span v-else class="content-website-name">
+            {{ mostStableWebInfo.friendly_name }}
+          </span>
         </template>
       </total-analyse-card>
     </el-col>
@@ -117,13 +122,17 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
         </template>
         <template #content>
           <el-link
-            class="link-content"
+            v-if="systemConfig.showLink"
+            class="content-website-name"
             :underline="false"
             :href="mostUnstableWebInfo.url"
             target="_blank"
           >
             {{ mostUnstableWebInfo.friendly_name }}
           </el-link>
+          <span v-else class="content-website-name">
+            {{ mostUnstableWebInfo.friendly_name }}
+          </span>
         </template>
       </total-analyse-card>
     </el-col>
@@ -131,8 +140,8 @@ const statisticValueStyle = { fontSize: '32px', fontWeight: 'bold' }
 </template>
 
 <style scoped>
-/*文字链接内容*/
-.link-content {
+/*内容-网站名称*/
+.content-website-name {
   font-size: 18px;
   font-weight: 600;
 }
