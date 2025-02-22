@@ -77,10 +77,12 @@ export const getAvgUptimeMsg = (totalAnalyse: TotalAnalyse) => {
  */
 export const getUptimeWebsiteMsg = (totalAnalyse: TotalAnalyse) => {
   let msg: string
-  if (totalAnalyse.avgUptime === 0) {
+  if (totalAnalyse.websiteCount === 0) {
     msg = '关于你的网站，我什么也不知道~'
-  } else if (totalAnalyse.avgUptime === totalAnalyse.downWebsiteCount) {
+  } else if (totalAnalyse.websiteCount === totalAnalyse.downWebsiteCount) {
     msg = '洗洗睡吧，全挂了！'
+  } else if (totalAnalyse.downWebsiteCount === 0) {
+    msg = '太棒了，一个都没有挂！'
   } else {
     msg = '不错，只挂了一部分，还有挽救的的机会。'
   }

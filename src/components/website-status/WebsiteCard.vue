@@ -14,7 +14,6 @@ const props = defineProps<{
 }>()
 
 const webInfo = getWebInfo(props.monitor) //网站信息
-console.log(webInfo, '内容')
 </script>
 
 <template>
