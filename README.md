@@ -1,6 +1,7 @@
 # website-status
 
-网站状态
+网站状态监控，基于[UptimeRobot接口](https://uptimerobot.com/api/)制作。
+本项目为纯前端项目，使用`vite`+`typescript`+`vue3`+`Element-Plus`。
 
 ## 介绍
 
@@ -32,7 +33,7 @@ my-vite-project/
 
 ### 页面
 
-![image-20250221175906497](./README.assets/image-20250221175906497.png)
+![image-20250222120016330](./README.assets/image-20250222120016330.png)
 
 ## 命令
 
