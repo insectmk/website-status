@@ -6,7 +6,7 @@ import systemConfig from '../../config/system-config.ts'
 import WebsiteLogs from './WebsiteLogs.vue'
 import TotalAnalyseCard from '../total-analyse/TotalAnalyseCard.vue'
 import { getAvgUptimeColor } from '../total-analyse/TotalAnalyse.util.ts'
-import { formatTimestamp } from '../../utils/uptime-robot-param-util.ts'
+import { formatTimestamp } from '../../utils/date-util.ts'
 
 // 使用 defineProps 定义 prop
 const props = defineProps<{
@@ -39,7 +39,7 @@ console.log(webInfo, '内容')
       <el-col :span="12">
         <el-card class="website-analyse-card">
           <span class="mobile-hide">创建时间：</span>
-          <span class="website-analyse-data">{{ formatTimestamp(webInfo.create_datetime) }}%</span>
+          <span class="website-analyse-data">{{ formatTimestamp(webInfo.create_datetime) }}</span>
         </el-card>
       </el-col>
       <el-col :span="12">

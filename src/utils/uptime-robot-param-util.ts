@@ -33,7 +33,7 @@ export const getCustomUptimeReqParam = (): UptimeRobotApiParams => {
     log_types: '1-2',
     logs: 1,
     logs_start_date: (now.getTime() - config.countDays * 24 * 60 * 60 * 1000) / 1000, // 日志开始时间（时间戳，秒为单位）
-    logs_end_date: (now.getTime() + 24 * 60 * 60 * 1000) / 1000 // 日志结束时间（时间戳，秒为单位）
+    logs_end_date: (now.getTime() + 24 * 60 * 60 * 1000) / 1000, // 日志结束时间（时间戳，秒为单位）
   } as UptimeRobotApiParams
 }
 
@@ -58,7 +58,7 @@ export const getStatusRangeInfos = (uptimeRanges: string, logs: Log[]): StatusRa
     const endDate = startDate + 24 * 60 * 60 * 1000
     const uptime: number = parseFloat(parseFloat(uptimeRangesArr[i]).toFixed(2)) //获取可用率
     const dayLogs = logs.filter(
-      (log) =>
+      log =>
         log.datetime * 1000 >= startDate &&
         log.datetime * 1000 <= endDate &&
         log.reason.code != '200'
@@ -72,7 +72,7 @@ export const getStatusRangeInfos = (uptimeRanges: string, logs: Log[]): StatusRa
       status.status = 'ok'
       status.statusText = `${formatTimestamp(startDate)} 可用率 ${uptime}%`
     } else if (uptime <= 0 && dayLogs.length === 0) {
-      status.status = 'none'
+      status.status = 'unknown'
       status.statusText = `${formatTimestamp(startDate)} 无数据`
     } else {
       status.status = 'down'
@@ -85,7 +85,7 @@ export const getStatusRangeInfos = (uptimeRanges: string, logs: Log[]): StatusRa
       endDate,
       uptime,
       downTimes: dayLogs.length, // 故障次数
-      downDuration // 故障时间总和，初始为0
+      downDuration, // 故障时间总和，初始为0
     } as StatusRangeInfo)
   }
   // 是否正序
@@ -104,12 +104,12 @@ export const formatTimestamp = (timestamp: number): string => {
   const formatter = new Intl.DateTimeFormat('default', {
     year: 'numeric',
     month: '2-digit',
-    day: '2-digit'
+    day: '2-digit',
   })
   const parts = formatter.formatToParts(date)
-  const year = parts.find((part) => part.type === 'year')!.value
-  const month = parts.find((part) => part.type === 'month')!.value
-  const day = parts.find((part) => part.type === 'day')!.value
+  const year = parts.find(part => part.type === 'year')!.value
+  const month = parts.find(part => part.type === 'month')!.value
+  const day = parts.find(part => part.type === 'day')!.value
   return `${year}-${month}-${day}`
 }
 
@@ -121,7 +121,7 @@ export const getStatus = (code: number): Status => {
   const status = {
     code,
     status: 'unknown',
-    statusText: '未知'
+    statusText: '未知',
   } as Status
   switch (code) {
     case 2:
