@@ -24,23 +24,35 @@ export const formatTimestamp = (timestamp: number, isMillisecond: boolean = fals
 }
 
 /**
- * 将秒转为文本
- * @param seconds 秒数
+ * 将秒数转换为格式化的时间文本，自动包含天数以避免小时数过多。
+ *
+ * @param seconds - 要转换的秒数
+ * @returns 格式化后的时间文本，例如 "2 天 3 小时 45 分 30 秒"
  */
 export const formatDuration = (seconds: number): string => {
-  let s = seconds
-  let m = 0
-  let h = 0
-  if (s >= 60) {
-    m = Math.floor(s / 60)
-    s = Math.floor(s % 60)
-    if (m >= 60) {
-      h = Math.floor(m / 60)
-      m = Math.floor(m % 60)
+  if (seconds < 0) {
+    throw new Error('秒数不能为负数')
+  }
+
+  const timeUnits: { unit: string; seconds: number; plural?: string }[] = [
+    { unit: '年', seconds: 31536000 },
+    { unit: '天', seconds: 86400 },
+    { unit: '小时', seconds: 3600 },
+    { unit: '分钟', seconds: 60 },
+    { unit: '秒', seconds: 1 },
+  ]
+
+  const parts: string[] = []
+
+  for (const { unit, seconds: unitSeconds, plural } of timeUnits) {
+    if (seconds >= unitSeconds) {
+      const count = Math.floor(seconds / unitSeconds)
+      seconds -= count * unitSeconds
+      // 根据单位是否定义了复数形式，决定如何添加 "s"
+      const unitText = plural ? `${count}${unit}${count !== 1 ? plural : ''}` : `${count}${unit}`
+      parts.push(unitText)
     }
   }
-  let text = `${s} 秒`
-  if (m > 0) text = `${m} 分 ${text}`
-  if (h > 0) text = `${h} 小时 ${text}`
-  return text
+
+  return parts.join('')
 }
