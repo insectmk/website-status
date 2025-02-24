@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Log } from '../../types/uptime-robot-type.ts'
 import { getWebsiteLogs } from './WebsiteLogs.util.ts'
+import { formatDuration } from '../../utils/date-util.ts'
 
 // 使用 defineProps 定义 prop
 const props = defineProps<{
@@ -18,13 +19,21 @@ const websiteLogs = getWebsiteLogs(props.logs)
         style="cursor: pointer"
       />
     </template>
-    <el-card v-for="websiteLog in websiteLogs" :key="websiteLog.log.id">
-      <div>
-        {{
-          `类型：${websiteLog.typeCodeInfo.name}持续时间：${websiteLog.durationTime}原因：${websiteLog.reasonCodeInfo.desc}`
-        }}
-      </div>
-    </el-card>
+    <el-table :data="websiteLogs" style="width: 100%" show-overflow-tooltip>
+      <el-table-column label="类型" width="70">
+        <template #default="scope">
+          <el-tag effect="dark" :type="scope.row.typeCodeInfo.type">{{
+            scope.row.typeCodeInfo.name
+          }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="持续时间" width="180">
+        <template #default="scope">
+          {{ formatDuration(scope.row.durationTime) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="reasonCodeInfo.desc" label="原因" />
+    </el-table>
   </el-popover>
 </template>
 
